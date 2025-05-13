@@ -15,7 +15,7 @@ export default function Header() {
       className={`transition-opacity duration-1000 ease-out
     ${
       isHome
-        ? "relative bg-[url('/background.jpg')] bg-center bg-cover opacity-0 animate-fadeIn"
+        ? "relative bg-[url('/background.jpg')] min-h-screen bg-center bg-cover opacity-0 animate-fadeIn"
         : "bg-zinc-900 text-white w-full shadow-sm"
     }`}
     >
