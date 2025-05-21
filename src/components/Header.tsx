@@ -4,12 +4,18 @@ import {
   SparklesIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
+import { useAppStore } from "../stores/useAppStore";
 
 export default function Header() {
   const { pathname } = useLocation();
   const isHome = useMemo(() => pathname === "/", [pathname]);
+  const fetchCategories = useAppStore( ( s ) => s.fetchCategories);
+  const categories = useAppStore( ( s ) => s.categories);
 
+  useEffect(()=>{
+    fetchCategories()
+  }, [fetchCategories])
   return (
     <header
       className={`transition-opacity duration-1000 ease-out
@@ -78,15 +84,14 @@ export default function Header() {
                 <option value="" disabled selected className="text-black/70">
                   Categoría
                 </option>
-                <option value="cocteles" className="text-black">
-                  Cócteles
+                {categories.drinks.map( category => (
+                  <option 
+                    key={category.strCategory} 
+                    value={category.strCategory} 
+                    className="text-black/70">
+                    {category.strCategory}
                 </option>
-                <option value="mocktails" className="text-black">
-                  Mocktails
-                </option>
-                <option value="shots" className="text-black">
-                  Shots
-                </option>
+                ) )}
               </select>
 
               <button
