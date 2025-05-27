@@ -4,7 +4,7 @@ import {
   SparklesIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState, type ChangeEvent } from "react";
 import { useAppStore } from "../stores/useAppStore";
 
 export default function Header() {
@@ -16,6 +16,20 @@ export default function Header() {
   useEffect(()=>{
     fetchCategories()
   }, [fetchCategories])
+
+  const [searchFilters, setSearchfilters] = useState({
+      ingredient: '',
+      category: ''
+  })
+
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
+  ) => {
+    setSearchfilters({
+      ...searchFilters,
+      [e.target.name]: e.target.value,
+    });
+  }; 
   return (
     <header
       className={`transition-opacity duration-1000 ease-out
@@ -77,11 +91,17 @@ export default function Header() {
               <input
                 type="text"
                 placeholder="Ingredientes"
+                name="ingredient"
+                onChange={handleChange}
+                value={searchFilters.ingredient}
                 className="flex-1 px-4 py-2 rounded-md bg-white/30 placeholder-white/70 text-white focus:outline-none focus:ring-2 focus:ring-fuchsia-400"
               />
 
-              <select className="px-4 cursor-pointer py-2 rounded-md bg-white/30 text-white focus:outline-none focus:ring-2 focus:ring-fuchsia-400">
-                <option value="" disabled selected className="text-black/70">
+              <select className="px-4 cursor-pointer py-2 rounded-md bg-white/30 text-white focus:outline-none focus:ring-2 focus:ring-fuchsia-400" name="category"
+                onChange={handleChange}
+                value={searchFilters.category}
+              >
+                <option value="" className="text-black/70">
                   Categoría
                 </option>
                 {categories.drinks.map( category => (
