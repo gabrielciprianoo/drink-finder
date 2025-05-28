@@ -7,3 +7,18 @@ export const CategoriesAPISchema = object({
     })
   ),
 });
+
+export const SearchFiltersSchema = object({
+  ingredient: string(),
+  category: string(),
+});
+
+export const DrinkAPIResponseSchema = object({
+  idDrink: string(),
+  strDrink: string(),
+  strDrinkThumb: string(),
+});
+
+export const DrinksAPIResponseSchema = object({
+  drinks: array(DrinkAPIResponseSchema)
+});
