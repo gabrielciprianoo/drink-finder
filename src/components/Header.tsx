@@ -4,7 +4,7 @@ import {
   SparklesIcon,
   MagnifyingGlassIcon,
 } from "@heroicons/react/24/outline";
-import { useEffect, useMemo, useState, type ChangeEvent } from "react";
+import { useEffect, useMemo, useState, type ChangeEvent, type FormEvent } from "react";
 import { useAppStore } from "../stores/useAppStore";
 
 export default function Header() {
@@ -12,6 +12,7 @@ export default function Header() {
   const isHome = useMemo(() => pathname === "/", [pathname]);
   const fetchCategories = useAppStore( ( s ) => s.fetchCategories);
   const categories = useAppStore( ( s ) => s.categories);
+  const searchRecipers = useAppStore( ( s ) => s.searchRecipers);
 
   useEffect(()=>{
     fetchCategories()
@@ -30,6 +31,18 @@ export default function Header() {
       [e.target.name]: e.target.value,
     });
   }; 
+
+
+  const handelSubmmit = ( e : FormEvent<HTMLFormElement> ) => {
+      e.preventDefault();
+
+      if(Object.values(searchFilters).includes('')){
+        console.log('se deben completar primero los campos');
+        return;
+      }
+      searchRecipers(searchFilters);
+  }
+
   return (
     <header
       className={`transition-opacity duration-1000 ease-out
@@ -85,7 +98,7 @@ export default function Header() {
               encuentra las mejores recetas de bebidas
             </h2>
             <form
-              onSubmit={(e) => e.preventDefault()}
+              onSubmit={handelSubmmit}
               className="w-full max-w-3xl bg-white/20 backdrop-blur-lg p-6 rounded-lg flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0 opacity-0 animate-fadeInUp delay-500"
             >
               <input
