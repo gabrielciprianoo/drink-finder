@@ -1,56 +1,18 @@
-import { NavLink, useLocation } from "react-router-dom";
-import {
-  HeartIcon,
-  SparklesIcon,
-  MagnifyingGlassIcon,
-} from "@heroicons/react/24/outline";
-import { useEffect, useMemo, useState, type ChangeEvent, type FormEvent } from "react";
-import { useAppStore } from "../stores/useAppStore";
+import { NavLink } from "react-router-dom";
+import { useHeaderLogic } from "../hooks/useHeaderLogic";
+import HeaderNav from "./HeaderNav";
+import SearchForm from "./SearchForm";
 
 export default function Header() {
-  const { pathname } = useLocation();
-  const isHome = useMemo(() => pathname === "/", [pathname]);
-  const fetchCategories = useAppStore( ( s ) => s.fetchCategories);
-  const categories = useAppStore( ( s ) => s.categories);
-  const searchRecipers = useAppStore( ( s ) => s.searchRecipers);
-
-  useEffect(()=>{
-    fetchCategories()
-  }, [fetchCategories])
-
-  const [searchFilters, setSearchfilters] = useState({
-      ingredient: '',
-      category: ''
-  })
-
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
-  ) => {
-    setSearchfilters({
-      ...searchFilters,
-      [e.target.name]: e.target.value,
-    });
-  }; 
-
-
-  const handelSubmmit = ( e : FormEvent<HTMLFormElement> ) => {
-      e.preventDefault();
-
-      if(Object.values(searchFilters).includes('')){
-        console.log('se deben completar primero los campos');
-        return;
-      }
-      searchRecipers(searchFilters);
-  }
+  const { isHome } = useHeaderLogic();
 
   return (
     <header
-      className={`transition-opacity duration-1000 ease-out
-    ${
-      isHome
-        ? "relative bg-[url('/background.jpg')] min-h-screen bg-center bg-cover opacity-0 animate-fadeIn"
-        : "bg-zinc-900 text-white w-full shadow-sm"
-    }`}
+      className={`transition-opacity duration-1000 ease-out ${
+        isHome
+          ? "relative bg-[url('/background.jpg')] min-h-screen md:min-h-[90%] lg:min-h-screen bg-center bg-cover opacity-0 animate-fadeIn"
+          : "bg-zinc-900 text-white w-full shadow-sm"
+      }`}
     >
       {isHome && (
         <>
@@ -65,76 +27,15 @@ export default function Header() {
             <img src="/drinky.png" alt="Drinky Logo" className="h-35 w-auto" />
           </NavLink>
 
-          <nav className="flex space-x-8 text-md uppercase">
-            <NavLink
-              to="/favorites"
-              className={({ isActive }) =>
-                isActive
-                  ? "flex items-center gap-2 text-fuchsia-400 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-400 rounded"
-                  : "flex items-center gap-2 text-zinc-100 hover:text-fuchsia-400 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-400 rounded"
-              }
-            >
-              <HeartIcon className="h-5 w-5" />
-              Favoritos
-            </NavLink>
-            <NavLink
-              to="/create-with-ai"
-              className={({ isActive }) =>
-                isActive
-                  ? "flex items-center gap-2 text-fuchsia-400 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-400 rounded"
-                  : "flex items-center gap-2 text-zinc-100 hover:text-fuchsia-400 transition-colors duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-fuchsia-400 rounded"
-              }
-            >
-              <SparklesIcon className="h-5 w-5" />
-              Crea con IA
-            </NavLink>
-          </nav>
+          <HeaderNav />
         </div>
 
-       
         {isHome && (
           <div className="flex flex-col items-center justify-center animate-fadeIn delay-300 py-15">
             <h2 className="capitalize text-3xl text-center font-bold text-white mt-10 mb-15 opacity-0 animate-fadeInUp">
               encuentra las mejores recetas de bebidas
             </h2>
-            <form
-              onSubmit={handelSubmmit}
-              className="w-full max-w-3xl bg-white/20 backdrop-blur-lg p-6 rounded-lg flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-0 opacity-0 animate-fadeInUp delay-500"
-            >
-              <input
-                type="text"
-                placeholder="Ingredientes"
-                name="ingredient"
-                onChange={handleChange}
-                value={searchFilters.ingredient}
-                className="flex-1 px-4 py-2 rounded-md bg-white/30 placeholder-white/70 text-white focus:outline-none focus:ring-2 focus:ring-fuchsia-400"
-              />
-
-              <select className="px-4 cursor-pointer py-2 rounded-md bg-white/30 text-white focus:outline-none focus:ring-2 focus:ring-fuchsia-400" name="category"
-                onChange={handleChange}
-                value={searchFilters.category}
-              >
-                <option value="" className="text-black/70">
-                  Categoría
-                </option>
-                {categories.drinks.map( category => (
-                  <option 
-                    key={category.strCategory} 
-                    value={category.strCategory} 
-                    className="text-black/70">
-                    {category.strCategory}
-                </option>
-                ) )}
-              </select>
-
-              <button
-                type="submit"
-                className="px-6 py-2 bg-fuchsia-500 hover:bg-fuchsia-600 rounded-md text-white flex items-center justify-center focus:outline-none focus:ring-2 focus:ring-fuchsia-400 cursor-pointer"
-              >
-                <MagnifyingGlassIcon className="h-5 w-5" />
-                <span className="md:sr-only ml-2 md:ml-0">Buscar</span>
-              </button>
-            </form>
+            <SearchForm />
           </div>
         )}
       </div>
