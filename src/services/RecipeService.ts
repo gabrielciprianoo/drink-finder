@@ -32,7 +32,7 @@ export async function getRecipes(filters: SearchFilterType) {
   }
 }
 
-export async function getRecipeById(id : Drink['idDrink']) : Promise<Recipe | void > {
+export async function getRecipeById(id : Drink['idDrink']) : Promise<Recipe> {
 
   const url = `https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`;
 
@@ -42,7 +42,7 @@ export async function getRecipeById(id : Drink['idDrink']) : Promise<Recipe | vo
 
   if(!result.success){
       console.error('Error data invalid', result.issues);
-      return;
+      return {} as Recipe;
   }
 
   return result.output;

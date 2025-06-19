@@ -17,11 +17,11 @@ export type RecipeSliceType = {
   drinks: Drinks;
   loading: boolean;
   filters: SearchFilterType;
-  selectedRecipe: Recipe | void;
+  selectedRecipe: Recipe;
   modal: boolean;
   fetchCategories: () => Promise<void>;
   searchRecipers: (searchFilters: SearchFilterType) => Promise<void>;
-  selectRecipe: (id: Drink["idDrink"]) => Promise<Recipe | void>;
+  selectRecipe: (id: Drink["idDrink"]) => Promise<Recipe>;
   closeModal: () => void;
 };
 
@@ -76,6 +76,7 @@ export const recipeSlice: StateCreator<RecipeSliceType> = (set) => ({
       selectedRecipe,
       modal: true,
     });
+    return selectedRecipe;
   },
 
   closeModal: () => {
