@@ -1,16 +1,28 @@
 import type { StateCreator } from "zustand";
-import { getCategories, getRecipeById, getRecipes } from "../services/RecipeService";
-import type { Categories, Drink, Drinks, Recipe, SearchFilterType } from "../types";
+import {
+  getCategories,
+  getRecipeById,
+  getRecipes,
+} from "../services/RecipeService";
+import type {
+  Categories,
+  Drink,
+  Drinks,
+  Recipe,
+  SearchFilterType,
+} from "../types";
 
 export type RecipeSliceType = {
   categories: Categories;
   drinks: Drinks;
   loading: boolean;
   filters: SearchFilterType;
-  selectedRecipe : Recipe | void ;
+  selectedRecipe: Recipe | void;
+  modal: boolean;
   fetchCategories: () => Promise<void>;
   searchRecipers: (searchFilters: SearchFilterType) => Promise<void>;
-  selectRecipe: ( id: Drink['idDrink'] ) => Promise<Recipe |void>;
+  selectRecipe: (id: Drink["idDrink"]) => Promise<Recipe | void>;
+  closeModal: () => void;
 };
 
 export const recipeSlice: StateCreator<RecipeSliceType> = (set) => ({
@@ -25,11 +37,13 @@ export const recipeSlice: StateCreator<RecipeSliceType> = (set) => ({
   loading: false,
 
   filters: {
-    ingredient: '',
-    category: ''
+    ingredient: "",
+    category: "",
   },
 
   selectedRecipe: {} as Recipe,
+
+  modal: false,
 
   fetchCategories: async () => {
     const categories = await getCategories();
@@ -46,7 +60,7 @@ export const recipeSlice: StateCreator<RecipeSliceType> = (set) => ({
         getRecipes(filters),
         new Promise((r) => setTimeout(r, 2000)),
       ]);
-      set({ filters })
+      set({ filters });
       set({ drinks });
     } catch (error) {
       console.error("Error al buscar recetas", error);
@@ -56,8 +70,18 @@ export const recipeSlice: StateCreator<RecipeSliceType> = (set) => ({
     }
   },
 
-  selectRecipe:  async ( id ) => {
+  selectRecipe: async (id) => {
     const selectedRecipe = await getRecipeById(id);
-    set({ selectedRecipe })
-  }
+    set({
+      selectedRecipe,
+      modal: true,
+    });
+  },
+
+  closeModal: () => {
+    set({
+      modal: false,
+      selectedRecipe: {} as Recipe,
+    });
+  },
 });

@@ -3,6 +3,7 @@ import { useAppStore } from "../stores/useAppStore";
 import SearchLoaderCard from "../components/SearchLoaderCard";
 import DrinkCard from "../components/DrinkCard";
 import { capitalize } from "../utils";
+import Modal from "../components/Modal";
 
 export default function IndexPage() {
   const loading = useAppStore((s) => s.loading);
@@ -52,6 +53,8 @@ export default function IndexPage() {
           </>
         )}
       </section>
+
+      <Modal/>
     </main>
   );
 }
