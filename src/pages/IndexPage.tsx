@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { useAppStore } from "../stores/useAppStore";
 import SearchLoaderCard from "../components/SearchLoaderCard";
+import DrinkCard from "../components/DrinkCard";
 import { capitalize } from "../utils";
 
 export default function IndexPage() {
@@ -20,7 +21,7 @@ export default function IndexPage() {
   if (!loading && !hasResults) return null;
 
   return (
-    <main className="container mx-auto md:max-w-2xl lg:max-w-5xl  px-2">
+    <main className="container mx-auto md:max-w-2xl lg:max-w-5xl px-2">
       <section
         className="bg-zinc-950 min-h-screen text-white transition-colors duration-500 px-4 md:py-16"
         ref={scrollRef}
@@ -42,17 +43,11 @@ export default function IndexPage() {
 
             <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 animate-fadeIn">
               {drinks.drinks.map((drink) => (
-                <div
+                <DrinkCard
                   key={drink.idDrink}
-                  className="bg-white/10 backdrop-blur-md p-4 rounded-xl border border-fuchsia-500/20 shadow-lg text-white transform transition-transform duration-300 hover:scale-[1.03] hover:border-fuchsia-500/60 hover:shadow-fuchsia-500/10"
-                >
-                  <h3 className="font-bold text-lg mb-2">{drink.strDrink}</h3>
-                  <img
-                    src={drink.strDrinkThumb}
-                    alt={drink.strDrink}
-                    className="w-full h-48 object-cover rounded-lg transition-transform duration-300"
-                  />
-                </div>
+                  name={drink.strDrink}
+                  image={drink.strDrinkThumb}
+                />
               ))}
             </div>
           </>
@@ -61,5 +56,3 @@ export default function IndexPage() {
     </main>
   );
 }
-
-
