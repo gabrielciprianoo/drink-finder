@@ -3,24 +3,23 @@ import { SparklesIcon } from "@heroicons/react/24/solid";
 
 export default function SearchLoaderCard() {
   return (
-    <div className="w-full max-w-2xl mx-auto mt-20 px-6 py-12 bg-gradient-to-br from-black/40 to-zinc-900/30 backdrop-blur-lg rounded-3xl border border-fuchsia-500/20 shadow-[0_0_30px_-5px_rgba(236,72,153,0.3)] text-white flex flex-col items-center gap-6 text-center animate-fadeIn transition-all duration-700 ease-out">
-      
-      <div className="flex items-center gap-3 animate-pulse">
-        <SparklesIcon className="w-8 h-8 text-fuchsia-400 drop-shadow-lg" />
-        <h3 className="text-2xl font-bold tracking-wide">
-          Buscando recetas mágicas...
-        </h3>
+    <div className="h-screen md:h-auto flex justify-center items-center">
+      <div className="w-full max-w-xl mx-auto  px-6 py-12 rounded-3xl bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-800 border border-fuchsia-500/25 shadow-[0_0_40px_-10px_rgba(236,72,153,0.4)] text-white flex flex-col items-center gap-6 text-center animate-fadeIn">
+        <div className="flex items-center gap-2">
+          <SparklesIcon className="w-6 h-6 text-fuchsia-400 animate-bounce" />
+          <h3 className="text-xl md:text-2xl font-semibold tracking-tight text-white/90">
+            Buscando recetas mágicas...
+          </h3>
+        </div>
+
+        <p className="text-sm text-fuchsia-300 italic max-w-xs md:max-w-md">
+          Estamos sacudiendo los ingredientes detrás de escena
+        </p>
+
+        <div className="mt-6">
+          <Spinner />
+        </div>
       </div>
-
-      <p className="text-sm text-fuchsia-300 italic animate-fadeIn delay-150">
-        Estamos sacudiendo los ingredientes detrás de escena
-      </p>
-
-      <div className="mt-4 animate-fadeIn delay-300">
-        <Spinner />
-      </div>
-
-      
     </div>
   );
 }
