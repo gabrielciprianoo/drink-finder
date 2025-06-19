@@ -45,8 +45,7 @@ export default function IndexPage() {
               {drinks.drinks.map((drink) => (
                 <DrinkCard
                   key={drink.idDrink}
-                  name={drink.strDrink}
-                  image={drink.strDrinkThumb}
+                  drink={drink}
                 />
               ))}
             </div>
