@@ -14,6 +14,9 @@ export default function Modal() {
   const modal = useAppStore((s) => s.modal);
   const closeModal = useAppStore((s) => s.closeModal);
   const selectedRecipe = useAppStore((s) => s.selectedRecipe);
+  const handleClickFavorite = useAppStore((s) => s.handleClickFavorite);
+  const isFavorite = useAppStore( (s)=> s.isFavorite  );
+  useAppStore((s) => s.favorites);
 
   const renderIngredients = () => {
     const ingredients: JSX.Element[] = [];
@@ -39,6 +42,12 @@ export default function Modal() {
 
     return ingredients;
   };
+
+  const isFav = isFavorite(selectedRecipe.idDrink);
+
+  const iconClass = isFav
+    ? "fill-fuchsia-400"
+    : "fill-white/70 stroke-2";
 
   if (!selectedRecipe) return null;
 
@@ -88,7 +97,7 @@ export default function Modal() {
                   </div>
 
                   <div className="flex-1 flex flex-col justify-center relative">
-                    <div className="flex justify-between items-center gap-4 mb-4 w-full lg:max-w-[50%]">
+                    <div className="flex justify-between items-center gap-4 mb-4 w-full md:max-w-[70%]">
                       <DialogTitle
                         as="h3"
                         className="text-lg md:text-xl font-bold text-fuchsia-400 tracking-tight"
@@ -98,18 +107,19 @@ export default function Modal() {
 
                       <div className="relative group">
                         <button
-                          onClick={() => {}}
+                          onClick={() => {
+                            handleClickFavorite(selectedRecipe);
+                          }}
                           className="p-1 md:p-2 rounded-full hover:bg-fuchsia-500/10 transition cursor-pointer"
                           aria-label="Agregar a favoritos"
                         >
                           <HeartIcon
-                            className={`w-6 h-6 md:w-7 md:h-7 transition-transform group-hover:scale-110 fill-fuchsia-400
-                            }`}
-                          />
+                            className={`w-6 h-6 md:w-7 md:h-7 transition-transform hover:scale-110 ${iconClass}`}
+/>
                         </button>
 
                         <span className="absolute top-1/2 left-full ml-2 -translate-y-1/2 whitespace-nowrap text-sm bg-zinc-800 text-white px-2 py-1 rounded shadow-lg opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-all z-50">
-                          Agregar a favoritos
+                          {isFav ? 'Eliminar De Favoritos' : 'Agregar a favoritos'}
                         </span>
                       </div>
                     </div>
