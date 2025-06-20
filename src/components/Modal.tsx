@@ -53,7 +53,7 @@ export default function Modal() {
 
   return (
     <Transition appear show={modal} as={Fragment}>
-      <Dialog as="div" className="relative z-50" onClose={closeModal}>
+      <Dialog as="div" className="relative z-40" onClose={closeModal}>
         <TransitionChild
           as={Fragment}
           enter="ease-out duration-300"
