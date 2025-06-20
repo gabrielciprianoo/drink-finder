@@ -1,11 +1,16 @@
 import { useLocation } from "react-router-dom";
 import Header from "../Header";
 import { Outlet } from "react-router-dom";
+import { useEffect } from "react";
+import { useAppStore } from "../../stores/useAppStore";
 
 export default function MainLayout() {
   const { pathname } = useLocation();
   const showMainWrapper = pathname !== "/"; 
-
+  const loadFromStorage = useAppStore( (s) => s.loadFromStorage);
+  useEffect(()=>{
+    loadFromStorage()
+  },[])
   return (
     <>
       <Header />
