@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
 import { useAppStore } from "../stores/useAppStore";
 import SearchLoaderCard from "../components/SearchLoaderCard";
-import DrinkCard from "../components/DrinkCard";
 import { capitalize } from "../utils";
 import Modal from "../components/Modal";
+import DrinksList from "../components/DrinksList";
 
 export default function IndexPage() {
   const loading = useAppStore((s) => s.loading);
@@ -42,14 +42,7 @@ export default function IndexPage() {
               </span>
             </h2>
 
-            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 animate-fadeIn">
-              {drinks.drinks.map((drink) => (
-                <DrinkCard
-                  key={drink.idDrink}
-                  drink={drink}
-                />
-              ))}
-            </div>
+            <DrinksList drinks={drinks.drinks}/>
           </>
         )}
       </section>
