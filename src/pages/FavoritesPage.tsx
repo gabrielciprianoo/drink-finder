@@ -4,7 +4,6 @@ import DrinksList from "../components/DrinksList";
 import Modal from "../components/Modal";
 import { useAppStore } from "../stores/useAppStore";
 import { HeartIcon } from "@heroicons/react/24/outline";
-import Notification from "../components/Notification";
 
 export default function FavoritesPage() {
   const favorites = useAppStore((s) => s.favorites);
@@ -41,7 +40,6 @@ export default function FavoritesPage() {
       )}
 
       <Modal />
-      <Notification/>
     </div>
   );
 }

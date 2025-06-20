@@ -4,7 +4,6 @@ import SearchLoaderCard from "../components/SearchLoaderCard";
 import { capitalize } from "../utils";
 import Modal from "../components/Modal";
 import DrinksList from "../components/DrinksList";
-import Notification from "../components/Notification";
 
 export default function IndexPage() {
   const loading = useAppStore((s) => s.loading);
@@ -49,7 +48,6 @@ export default function IndexPage() {
       </section>
 
       <Modal/>
-      <Notification/>
     </main>
   );
 }

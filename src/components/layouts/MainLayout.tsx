@@ -3,6 +3,7 @@ import Header from "../Header";
 import { Outlet } from "react-router-dom";
 import { useEffect } from "react";
 import { useAppStore } from "../../stores/useAppStore";
+import Notification from "../Notification";
 
 export default function MainLayout() {
   const { pathname } = useLocation();
@@ -21,6 +22,7 @@ export default function MainLayout() {
       ) : (
         <Outlet />
       )}
+      <Notification/>
     </>
   );
 }
