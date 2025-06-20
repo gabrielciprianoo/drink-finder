@@ -6,6 +6,7 @@ export function useSearchFormLogic() {
   const fetchCategories = useAppStore((s) => s.fetchCategories);
   const categories = useAppStore((s) => s.categories);
   const searchRecipers = useAppStore((s) => s.searchRecipers);
+  const showNotification = useAppStore ((s) => s.showNotification);
 
   const [searchFilters, setSearchFilters] = useState({
     ingredient: "",
@@ -30,7 +31,10 @@ export function useSearchFormLogic() {
     (e: FormEvent<HTMLFormElement>) => {
       e.preventDefault();
       if (Object.values(searchFilters).includes("")) {
-        console.warn("Se deben completar todos los campos");
+        showNotification({
+          error: true,
+          text: 'Llena todos los campos para buscar bebidas'
+        })
         return;
       }
       searchRecipers(searchFilters);
