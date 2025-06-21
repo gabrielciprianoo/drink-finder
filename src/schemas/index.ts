@@ -1,4 +1,4 @@
-import { object, string, array, nullable } from "valibot";
+import { object, string, array, nullable, optional, boolean } from "valibot";
 
 export const CategoriesAPISchema = object({
   drinks: array(
@@ -17,6 +17,7 @@ export const DrinkAPIResponseSchema = object({
   idDrink: string(),
   strDrink: string(),
   strDrinkThumb: string(),
+  generatedWithAI: optional( boolean())
 });
 
 export const DrinksAPIResponseSchema = object({
@@ -40,4 +41,5 @@ export const RecipeAPIResponseSchema = object({
   strMeasure4: nullable(string()),
   strMeasure5: nullable(string()),
   strMeasure6: nullable(string()),
+  generatedWithAI: optional( boolean())
 });

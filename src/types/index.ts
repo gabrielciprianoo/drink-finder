@@ -6,3 +6,7 @@ export type SearchFilterType = InferOutput<typeof SearchFiltersSchema>;
 export type Drinks = InferOutput<typeof DrinksAPIResponseSchema>;
 export type Drink = InferOutput<typeof DrinkAPIResponseSchema>;
 export type Recipe = InferOutput<typeof RecipeAPIResponseSchema>;
+
+export type Recipes = {
+    drinks: Recipe[]
+};
