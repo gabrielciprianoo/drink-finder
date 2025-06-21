@@ -1,31 +1,32 @@
 import { useState } from "react";
-import type { Recipe } from "../types";
+import { useAppStore } from "../stores/useAppStore";
 
 export function useCreateRecipeAI() {
   const [prompt, setPrompt] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [recipe, setRecipe] = useState<Recipe | null>(null);
+  const loading = useAppStore( (s) => s.generatedLoading);
+  const generateRecipe = useAppStore( (s) => s.generateRecipe);
+  const showNotification = useAppStore( (s)=> s.showNotification);
+
 
   const onChange = (value: string) => setPrompt(value);
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!prompt.trim()) return;
+    if (!prompt.trim()){
+      showNotification({
+        text: 'Escribe en el campo de texto la bebida que quieres crear',
+        error: true
+      })
+      return;
+    } 
+    await generateRecipe(prompt);
+    setPrompt('');
 
-    setLoading(true);
-    setRecipe(null);
-
-    const result = {} as Recipe; 
-    setTimeout(() => {
-      setRecipe(result);
-      setLoading(false);
-    }, 1500);
   };
 
   return {
     prompt,
     loading,
-    recipe,
     onChange,
     onSubmit,
   };
