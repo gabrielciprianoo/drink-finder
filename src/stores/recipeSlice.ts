@@ -11,6 +11,7 @@ import type {
   Recipe,
   SearchFilterType,
 } from "../types";
+import type { GeneratedRecipeType } from "./generatedRecipeSlice";
 
 export type RecipeSliceType = {
   categories: Categories;
@@ -25,7 +26,12 @@ export type RecipeSliceType = {
   closeModal: () => void;
 };
 
-export const createRecipeSlice: StateCreator<RecipeSliceType> = (set) => ({
+export const createRecipeSlice: StateCreator<
+  RecipeSliceType & GeneratedRecipeType,
+  [],
+  [],
+  RecipeSliceType
+> = (set, get) => ({
   categories: {
     drinks: [],
   },
@@ -71,12 +77,26 @@ export const createRecipeSlice: StateCreator<RecipeSliceType> = (set) => ({
   },
 
   selectRecipe: async (id) => {
-    const selectedRecipe = await getRecipeById(id);
+    const generatedDrinks = get().generatedRecipes.drinks;
+    const existsRecipe = generatedDrinks.find(
+      (recipe) => recipe.idDrink === id
+    );
+
+    if (!existsRecipe) {
+      const selectedRecipe = await getRecipeById(id);
+      set({
+        selectedRecipe,
+        modal: true,
+      });
+      return selectedRecipe;
+    }
+
     set({
-      selectedRecipe,
+      selectedRecipe: existsRecipe,
       modal: true,
     });
-    return selectedRecipe;
+
+    return existsRecipe;
   },
 
   closeModal: () => {
