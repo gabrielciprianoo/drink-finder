@@ -1,22 +1,11 @@
 import { SparklesIcon, ArrowPathIcon } from "@heroicons/react/24/outline";
 import { Transition } from "@headlessui/react";
+import { useCreateRecipeAI } from "../hooks/useCreateRecipeAI";
 
-type Props = {
-  prompt: string;
-  loading: boolean;
-  onChange: (value: string) => void;
-  onSubmit: (e: React.FormEvent) => void;
-};
-
-export default function CreateRecipeForm({
-  prompt,
-  loading,
-  onChange,
-  onSubmit,
-}: Props) {
+export default function CreateRecipeForm() {
+  const { onChange, onSubmit, prompt, loading } = useCreateRecipeAI();
   return (
     <form onSubmit={onSubmit} className="space-y-6 animate-fadeIn">
-      
       <Transition
         appear
         show
