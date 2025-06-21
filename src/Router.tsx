@@ -7,6 +7,8 @@ const FavoritesPage = lazy( () => import('./pages/FavoritesPage'));
 
 const IndexPage = lazy(() => import('./pages/IndexPage'));
 
+const CreatePage = lazy(() => import('./pages/CreatePage'));
+
 export default function Router() {
   return (
     <BrowserRouter>
@@ -20,6 +22,11 @@ export default function Router() {
           <Route path="/favorites" element={
             <Suspense fallback={'cargando...'}>
               <FavoritesPage />
+            </Suspense>
+          } />
+          <Route path="/create-with-ai" element={
+            <Suspense fallback={'cargando...'}>
+              <CreatePage />
             </Suspense>
           } />
         </Route>
