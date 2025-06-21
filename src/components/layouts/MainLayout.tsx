@@ -9,8 +9,10 @@ export default function MainLayout() {
   const { pathname } = useLocation();
   const showMainWrapper = pathname !== "/"; 
   const loadFromStorage = useAppStore( (s) => s.loadFromStorage);
+  const loadGeneratedFromStorage = useAppStore( (s) => s.loadGeneratedFromStorage);
   useEffect(()=>{
-    loadFromStorage()
+    loadFromStorage();
+    loadGeneratedFromStorage();
   },[])
   return (
     <>
