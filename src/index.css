@@ -129,3 +129,30 @@ body {
     opacity: 0; 
   }
 }
+
+@layer utilities {
+  .example-text {
+    @apply text-white/80 italic border-r-2 border-fuchsia-400 overflow-hidden whitespace-nowrap w-fit;
+
+    animation: typewriter steps(60, end) 4s infinite,
+               blinkCursor 0.75s step-end infinite;
+  }
+
+  @keyframes typewriter {
+    from {
+      max-width: 0;
+    }
+    to {
+      max-width: 100%;
+    }
+  }
+
+  @keyframes blinkCursor {
+    0%, 100% {
+      border-color: transparent;
+    }
+    50% {
+      border-color: rgba(232, 121, 249, 0.7); /* fuchsia-400 */
+    }
+  }
+}
