@@ -29,7 +29,6 @@ export default function CreateRecipeForm() {
           <textarea
             value={prompt}
             onChange={(e) => onChange(e.target.value)}
-            required
             rows={3}
             className="peer w-full resize-none px-4 pt-5 pb-3 bg-zinc-900 text-white border border-zinc-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-fuchsia-500 placeholder-transparent transition-all text-base"
             placeholder="Describe tu bebida"
@@ -42,7 +41,7 @@ export default function CreateRecipeForm() {
         <button
           type="submit"
           disabled={loading}
-          className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-fuchsia-600 hover:bg-fuchsia-700 font-medium text-white transition disabled:opacity-50 disabled:cursor-not-allowed"
+          className="w-full sm:w-auto flex items-center justify-center gap-2 px-6 py-3 rounded-lg bg-fuchsia-600 hover:bg-fuchsia-700 font-medium text-white transition disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer"
         >
           {loading ? (
             <>
