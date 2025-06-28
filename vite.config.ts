@@ -12,7 +12,7 @@ export default defineConfig({
       includeAssets: [
         "favicon.ico",
         "apple-touch-icon.png",
-        "screenshot1.png" // asegúrate de que exista en /public
+        "screenshot1.png"
       ],
       manifest: {
         id: "/",
@@ -21,6 +21,7 @@ export default defineConfig({
         short_name: "DrinkFinder",
         description: "Busca recetas de bebidas por ingrediente o categoría",
         lang: "es-MX",
+        dir: "ltr",
         categories: ["food", "utilities"],
         orientation: "portrait",
         start_url: "/",
@@ -42,9 +43,22 @@ export default defineConfig({
             src: "/pwa-512x512.png",
             sizes: "512x512",
             type: "image/png",
-            purpose: "any maskable"
+            purpose: "maskable"
           }
         ],
+        screenshots: [
+          {
+            src: "/screenshot1.png",
+            sizes: "540x720",
+            type: "image/png",
+            form_factor: "wide"
+          }
+        ],
+        launch_handler: {
+          client_mode: "focus-existing"
+        },
+        prefer_related_applications: false,
+        related_applications: []
       }
     })
   ]
