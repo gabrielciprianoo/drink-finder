@@ -15,7 +15,7 @@ export default function Modal() {
   const closeModal = useAppStore((s) => s.closeModal);
   const selectedRecipe = useAppStore((s) => s.selectedRecipe);
   const handleClickFavorite = useAppStore((s) => s.handleClickFavorite);
-  const isFavorite = useAppStore( (s)=> s.isFavorite  );
+  const isFavorite = useAppStore((s) => s.isFavorite);
   useAppStore((s) => s.favorites);
 
   const renderIngredients = () => {
@@ -45,9 +45,7 @@ export default function Modal() {
 
   const isFav = isFavorite(selectedRecipe.idDrink);
 
-  const iconClass = isFav
-    ? "fill-fuchsia-400"
-    : "fill-white/70 stroke-2";
+  const iconClass = isFav ? "fill-fuchsia-400" : "fill-white/70 stroke-2";
 
   if (!selectedRecipe) return null;
 
@@ -92,6 +90,11 @@ export default function Modal() {
                     <img
                       src={selectedRecipe.strDrinkThumb}
                       alt={`Imagen de ${selectedRecipe.strDrink}`}
+                      onError={(e) => {
+                        const target = e.currentTarget;
+                        target.onerror = null; 
+                        target.src = "/drinkyai.jpg"; 
+                      }}
                       className="w-full h-full object-cover"
                     />
                   </div>
@@ -115,11 +118,13 @@ export default function Modal() {
                         >
                           <HeartIcon
                             className={`w-6 h-6 md:w-7 md:h-7 transition-transform hover:scale-110 ${iconClass}`}
-/>
+                          />
                         </button>
 
                         <span className="absolute top-1/2 left-full ml-2 -translate-y-1/2 whitespace-nowrap text-sm bg-zinc-800 text-white px-2 py-1 rounded shadow-lg opacity-0 scale-95 group-hover:opacity-100 group-hover:scale-100 transition-all z-50">
-                          {isFav ? 'Eliminar De Favoritos' : 'Agregar a favoritos'}
+                          {isFav
+                            ? "Eliminar De Favoritos"
+                            : "Agregar a favoritos"}
                         </span>
                       </div>
                     </div>
